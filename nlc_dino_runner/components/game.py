@@ -1,6 +1,7 @@
 import pygame
 
 from nlc_dino_runner.utils.constants import TITLE, ICON, SCREEN_WIDTH, SCREEN_HEIGHT, BG, FPS
+from nlc_dino_runner.components.dinosaur import Dinosaur
 
 
 class Game:
@@ -11,12 +12,14 @@ class Game:
         self.clock = pygame.time.Clock()
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.playing = False
-        self.x_pos_bg = 0
-        self.y_pos_bg = 360
         self.game_speed = 20
+        self.x_pos_bg = 0
+        self.y_pos_bg = 380
+        self.player = Dinosaur()
 
     def run(self):
         self.playing = True
+        #GAME LOOP: event, update, draw
         while self.playing:  #3 segundos
             self.event()
             self.update()
@@ -29,17 +32,20 @@ class Game:
                 self.playing = False
 
     def update(self):
-        pass
+        user_input = pygame.key.get_pressed()
+        self.player.update(user_input)
 
     def draw(self):
         self.clock.tick(FPS)
         self.screen.fill((255, 255, 255))
         self.draw_background()
+        self.player.draw(self.screen)
         pygame.display.update()
         pygame.display.flip()
 
     def draw_background(self):
         image_width = BG.get_width()
+        #para dibujar imagen "blit"
         self.screen.blit(BG, (self.x_pos_bg, self.y_pos_bg))
 
         #La imagen se mueve
