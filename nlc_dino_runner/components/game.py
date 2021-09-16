@@ -87,7 +87,6 @@ class Game:
         white_color = (255, 255, 255)
         self.screen.fill(white_color)
 
-        #Futuramente vamos a mostrar el menu
         self.print_menu_elements()
         pygame.display.update()
         self.handle_key_events_on_menu()
@@ -106,10 +105,14 @@ class Game:
     def print_menu_elements(self):
         half_screen_height = SCREEN_HEIGHT // 2
 
-        text, text_rect = text_utils.get_centered_message("Press any key to Start")
+        if self.death_count < 1:
+            text, text_rect = text_utils.get_centered_message("Press any key to Start")
+        else:
+            text, text_rect = text_utils.get_centered_message("Press any key to Restart")
+            death_score, death_score_rect = text_utils.get_centered_message("Death count: " + str(self.death_count), height=half_screen_height + 50)
+            self.screen.blit(death_score, death_score_rect)
+            score, score_rect = text_utils.get_centered_message("FINAL Score: " + str(self.points), height=half_screen_height + 90)
+            self.screen.blit(score, score_rect)
         self.screen.blit(text, text_rect)
-
-        death_score, death_score_rect = text_utils.get_centered_message("Death count: " + str(self.death_count), height=half_screen_height+50)
-        self.screen.blit(death_score, death_score_rect)
 
         self.screen.blit(ICON, ((SCREEN_WIDTH // 2) - 40, (SCREEN_HEIGHT // 2) - 150))
