@@ -9,7 +9,11 @@ from nlc_dino_runner.utils.constants import (
     DUCKING_SHIELD,
     JUMPING_SHIELD,
     DEFAULT_TYPE,
-    SHIELD_TYPE
+    SHIELD_TYPE,
+    HAMMER_TYPE,
+    RUNNING_HAMMER,
+    JUMPING_HAMMER,
+    DUCKING_HAMMER
 )
 
 
@@ -22,21 +26,28 @@ class Dinosaur(Sprite):
     def __init__(self):
         self.run_img = {
                         DEFAULT_TYPE: RUNNING,
-                        SHIELD_TYPE: RUNNING_SHIELD
+                        SHIELD_TYPE: RUNNING_SHIELD,
+                        HAMMER_TYPE: RUNNING_HAMMER
                         }
         self.jump_img = {
                         DEFAULT_TYPE: JUMPING,
-                        SHIELD_TYPE: JUMPING_SHIELD
+                        SHIELD_TYPE: JUMPING_SHIELD,
+                        HAMMER_TYPE: JUMPING_HAMMER
                         }
         self.duck_img = {
                         DEFAULT_TYPE: DUCKING,
-                        SHIELD_TYPE: DUCKING_SHIELD
+                        SHIELD_TYPE: DUCKING_SHIELD,
+                        HAMMER_TYPE: DUCKING_HAMMER
                         }
+
         self.type = DEFAULT_TYPE
         self.image = self.run_img[self.type][0]
 
-        self.shield = False
+        self.shield = False #BANDERA PARA SABER SI SHIELD ESTA HABILTADO
         self.shield_time_up = 0
+
+        self.hammer = False
+
         self.show_text = False
 
         self.dino_rect = self.image.get_rect()
@@ -116,3 +127,6 @@ class Dinosaur(Sprite):
 
     def draw(self, screen):
         screen.blit(self.image, (self.dino_rect.x, self.dino_rect.y))
+
+
+

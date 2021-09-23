@@ -25,16 +25,15 @@ class Game:
         self.points = 0
         self.running = True
         self.death_count = 0
-        self.life_manager = LifeManager()##########
+        self.life_manager = LifeManager()
 
     def run(self):
         self.obstacle_manager.reset_obstacles()
-        self.power_up_manager.reset_power_ups(self.points)
+        self.power_up_manager.reset_power_ups(self.points, self.player)
         self.points = 0
         self.playing = True
-        #self.life_manager =
+        self.life_manager.refull_lifes()
         #GAME LOOP: event, update, draw
-        self.life_manager.refull_lives()
         while self.playing:  #3 segundos
             self.event()
             self.update()
@@ -44,6 +43,9 @@ class Game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.playing = False
+                pygame.display.quit()
+                pygame.quit()
+                exit()
 
     def update(self):
         user_input = pygame.key.get_pressed()
@@ -70,8 +72,6 @@ class Game:
         score_element, score_element_rect = text_utils.get_score_element(self.points)
         self.screen.blit(score_element, score_element_rect)
         self.player.check_invincibility(self.screen)
-
-    #def check_invincibility(self):
 
     def draw_background(self):
         image_width = BG.get_width()

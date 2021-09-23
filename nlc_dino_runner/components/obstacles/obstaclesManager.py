@@ -13,21 +13,26 @@ class ObstaclesManager:
         self.obstacles_list = []
 
     def update(self, game):
-        self.aleatorio = random.randint(0,2)
+        object_types = random.randint(0, 2)
         if len(self.obstacles_list) == 0:
-            if self.aleatorio == 0:
+            if object_types == 0:
                 self.obstacles_list.append(Cactus(SMALL_CACTUS))
-            if self.aleatorio == 1:
+            if object_types == 1:
                 self.obstacles_list.append(Cactus(LARGE_CACTUS))
-            if self.aleatorio == 2:
+            if object_types == 2:
                 self.obstacles_list.append(Bird(BIRD))
 
         for obstacle in self.obstacles_list:
             obstacle.update(game.game_speed, self.obstacles_list)
+
+            if game.power_up_manager.hammer.rect.colliderect(obstacle.rect):
+                self.obstacles_list.remove(obstacle)
+
             if game.player.dino_rect.colliderect(obstacle.rect):
                 if game.player.shield:
                     self.obstacles_list.remove(obstacle)
                 elif game.life_manager.life_counter() == 1:
+                    game.life_manager.delete_life()
                     pygame.time.delay(500)
                     game.playing = False
                     game.death_count += 1
