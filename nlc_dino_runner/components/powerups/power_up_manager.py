@@ -4,7 +4,8 @@ import pygame
 from nlc_dino_runner.components.powerups.hammer import Hammer
 from nlc_dino_runner.components.powerups.shield import Shield
 from nlc_dino_runner.utils.constants import SHIELD_TYPE, DEFAULT_TYPE, HAMMER_TYPE
-
+# Para efectos de sonido
+from nlc_dino_runner.utils.constants import SOUND_SHIELD, SOUND_HAMMER
 
 class PowerUpManager:
 
@@ -46,27 +47,29 @@ class PowerUpManager:
 
                 if player.type == SHIELD_TYPE:
                     player.shield = True
+                    SOUND_SHIELD.play()
                     player.show_text = True
                     player.shield_time_up = power_up.start_time + (time_random * 1000)
 
                 if player.type == HAMMER_TYPE:
+                    self.hammer.count_hammers = True
                     player.hammer = True
+                    SOUND_HAMMER.play()
                     player.hammer_time_up = power_up.start_time + (time_random * 1000)
-                    self.hammer.hammer_left = 3
+                    self.hammer.hammers_left = 3
 
         user_input = pygame.key.get_pressed()
 
-        if user_input[pygame.K_SPACE] and player.hammer and not self.throwing_hammer and self.hammer.hammer_left > 0:
+        if user_input[pygame.K_SPACE] and player.hammer and not self.throwing_hammer and self.hammer.hammers_left > 0:
             self.throwing_hammer = True
             self.hammer.set_pos_hammer(player.dino_rect)
-            self.hammer.hammer_left -= 1
+            self.hammer.hammers_left -= 1
 
-            if self.hammer.hammer_left == 0:
+            if self.hammer.hammers_left == 0:
                 player.type = DEFAULT_TYPE
 
         if self.throwing_hammer:
             self.hammer.update_hammer(game_speed, self)
-
 
     def draw(self, screen):
         for power_up in self.power_ups:
@@ -74,3 +77,6 @@ class PowerUpManager:
 
         if self.throwing_hammer:
             self.hammer.draw_hammer(screen)
+
+        if self.hammer.hammers_left > 0:
+            self.hammer.draw_left_hammers(screen)

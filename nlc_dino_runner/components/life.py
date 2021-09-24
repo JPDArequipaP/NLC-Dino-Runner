@@ -8,5 +8,6 @@ class Life(Sprite):
         self.life_rect = self.image.get_rect()
         self.life_rect.x = self.pos_x
         self.life_rect.y = 40
+
     def draw(self, screen):
         screen.blit(self.image, (self.life_rect.x, self.life_rect.y))

@@ -1,7 +1,9 @@
 import pygame
 import os
+from pygame import mixer
 
 # Global Constants
+
 TITLE = "Dino Runner"
 SCREEN_HEIGHT = 600
 SCREEN_WIDTH = 1100
@@ -37,12 +39,12 @@ DUCKING = [
 
 DUCKING_SHIELD = [
     pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoDuck1Shield.png")),
-    pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoDuck2.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoDuck2Shield.png")),
 ]
 
 DUCKING_HAMMER = [
     pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoDuck1Hammer.png")),
-    pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoDuck2.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoDuck2Hammer.png")),
 ]
 
 SMALL_CACTUS = [
@@ -72,3 +74,21 @@ HEART = pygame.image.load(os.path.join(IMG_DIR, 'Other/SmallHeart.png'))
 DEFAULT_TYPE = "default"
 SHIELD_TYPE = "shield"
 HAMMER_TYPE = "hammer"
+
+#EFECTOS DE SONIDO
+pygame.mixer.init()
+
+SOUND_SHIELD = mixer.Sound("SoundEffects/Efecto de sonido Shield.mp3")
+SOUND_HAMMER = mixer.Sound("SoundEffects/Efecto de sonido Hammer.mp3")
+SOUND_GAME_LOOP = mixer.Sound("SoundEffects/Efecto de sonido Game_Loop.mp3")
+SOUND_COLLISION = mixer.Sound("SoundEffects/Efecto de sonido Collision.mp3")
+SOUND_HAMMER_COLLISION = mixer.Sound("SoundEffects/Efecto de sonido Hammer_Collision.mp3")
+SOUND_GAME_OVER = mixer.Sound("SoundEffects/Efecto de sonido Game_over.mp3")
+
+DINO_DEAD = pygame.image.load(os.path.join(IMG_DIR, 'Dino/DinoDead.png'))
+
+RESET_IMG = pygame.image.load(os.path.join(IMG_DIR, "Other/Reset.png"))
+GAME_OVER_IMG = pygame.image.load(os.path.join(IMG_DIR, "Other/GameOver.png"))
+
+DARK_MODE = (0, 0, 0)
+NORMAL_MODE = (250, 250, 250)

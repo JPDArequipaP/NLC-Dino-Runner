@@ -13,7 +13,8 @@ from nlc_dino_runner.utils.constants import (
     HAMMER_TYPE,
     RUNNING_HAMMER,
     JUMPING_HAMMER,
-    DUCKING_HAMMER
+    DUCKING_HAMMER,
+    DINO_DEAD
 )
 
 
@@ -39,6 +40,8 @@ class Dinosaur(Sprite):
                         SHIELD_TYPE: DUCKING_SHIELD,
                         HAMMER_TYPE: DUCKING_HAMMER
                         }
+
+        self.dead_img = DINO_DEAD
 
         self.type = DEFAULT_TYPE
         self.image = self.run_img[self.type][0]
@@ -107,6 +110,13 @@ class Dinosaur(Sprite):
             self.dino_jump = False
             self.jump_vel = self.JUMP_VEL
 
+    def draw_dead(self, screen):
+        self.image = self.dead_img
+        self.dino_rect = self.image.get_rect()
+        self.dino_rect.x = self.X_POS
+        self.dino_rect.y = self.Y_POS
+        screen.blit(self.image, (self.dino_rect.x, self.dino_rect.y))
+
     def check_invincibility(self, screen):
         if self.shield:
             time_to_show = round((self.shield_time_up - pygame.time.get_ticks())/1000, 1)
@@ -127,6 +137,5 @@ class Dinosaur(Sprite):
 
     def draw(self, screen):
         screen.blit(self.image, (self.dino_rect.x, self.dino_rect.y))
-
 
 
